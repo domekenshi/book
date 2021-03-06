@@ -11,121 +11,164 @@
   <title>検索と追加</title>
 
   <script>
-$(function(){
-    // フォームID [isbn] に入力があった場合、jQueryの関数 [change] を使ってISBNコードを取得。
-    // Google Books APIへ問い合わせを行う。
-    // もしGoogle Books APIに書籍が存在しない(totalItemsが0の場合)、入力欄に表示されたデータをすべて消去し、該当書籍がないとメッセージを表示する
+    $(function () {
+      // フォームID [isbn] に入力があった場合、jQueryの関数 [change] を使ってISBNコードを取得。
+      // Google Books APIへ問い合わせを行う。
+      // もしGoogle Books APIに書籍が存在しない(totalItemsが0の場合)、入力欄に表示されたデータをすべて消去し、該当書籍がないとメッセージを表示する
 
-    $("#isbn").change(function () {
-      const isbn = $("#isbn").val();
-      const url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
+      $("#isbn").change(() => {
+        const isbn = $("#isbn").val();
+        const url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
 
-      $.getJSON(url, function (data) {
-        if (!data.totalItems) {
-          $("#isbn").val("");
-          $("#BookTitle").text("");
-          $("#BookAuthor").text("");
-          $("#isbn10").text("");
-          $("#isbn13").text("");
-          $("publisher").val("");
-          $("#PublishedDate").text("");
-          $("#BookThumbnail").text("");
-          $("#BookDescription").text("");
-          $("#BookMemo").val("");
-          
-
-          $("#message").html('<p class="bg-warning" id="warning">該当する書籍がありません。</p>');
-          $('#message > p').fadeOut(3000);
-
-        } else {
-
-          // 該当書籍が存在した場合、JSONをパースして入力項目のデータを取得する
-
-          $("#BookTitle").val(data.items[0].volumeInfo.title);
-          $("#isbn13").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
-          $("#isbn10").text(data.items[0].volumeInfo.industryIdentifiers[1].identifier);
-          $("#BookAuthor").val(data.items[0].volumeInfo.authors[0]);
-          $("#Publisher").val(data.items[0].volumeInfo.publisher);
-          $("#PublishedDate").text(data.items[0].volumeInfo.publishedDate);
-          $("#BookDescription").text(data.items[0].volumeInfo.description);
-          $("#BookThumbnail").html('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
+        $.getJSON(url, function (data) {
+          if (!data.totalItems) {
+            $("#isbn").val("");
+            $("#BookTitle").text("");
+            $("#BookAuthor").text("");
+            $("#isbn10").text("");
+            $("#isbn13").text("");
+            $("publisher").val("");
+            $("#PublishedDate").text("");
+            $("#BookThumbnail").text("");
+            $("#BookDescription").text("");
+            $("#BookMemo").val("");
 
 
+            $("#message").html('<p class="bg-warning" id="warning">該当する書籍がありません。</p>');
+            $('#message > p').fadeOut(3000);
 
-        }
+          } else {
 
+            // 該当書籍が存在した場合、JSONをパースして入力項目のデータを取得する
+
+            $("#BookTitle").val(data.items[0].volumeInfo.title);
+            $("#isbn13").text(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
+            $("#isbn10").text(data.items[0].volumeInfo.industryIdentifiers[1].identifier);
+            $("#BookAuthor").val(data.items[0].volumeInfo.authors[0]);
+            $("#Publisher").val(data.items[0].volumeInfo.publisher);
+            $("#PublishedDate").text(data.items[0].volumeInfo.publishedDate);
+            $("#BookDescription").text(data.items[0].volumeInfo.description);
+            $("#BookThumbnail").html('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
+            $("#BookThumbnail2").val('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
+
+
+
+          }
+
+        });
       });
     });
-  });
   </script>
 </head>
+<style>
+h1 {
+  padding: 1.65rem 2rem;
+  background-color: rgba(165, 210, 255, .4);
+  background-image:
+    linear-gradient(90deg, rgba(165, 210, 255, .3) 50%, transparent 50%),
+    linear-gradient(rgba(165, 210, 255, .3) 50%, transparent 50%);
+  background-size: 40px 40px;
+}
+.button{
+  
+  display       : inline-block;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 18pt;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 12px 12px;   /* 余白       */
+  background    : #1f1fca;     /* 背景色     */
+  color         : #ffffff;     /* 文字色     */
+  line-height   : 1em;         /* 1行の高さ  */
+  transition    : .3s;         /* なめらか変化 */
+  box-shadow    : 6px 6px 3px #666666;  /* 影の設定 */
+  border        : 2px solid #000066;    /* 枠の指定 */
+}
+.button:hover {
+  box-shadow    : none;        /* カーソル時の影消去 */
+  color         : #000066;     /* 背景色     */
+  background    : #ffffff;     /* 文字色     */
+}
+  
 
-<body style="text-align: center;">
+</style>
+<body style="text-align: center; padding: 1em;">
 
+  <!-- とび先のURLの指定
+画像をどうやって送るか -->
+<h1>ISBN検索</h1>
+  <div class="container" style="background-color: rgb(245, 239, 244);padding: 20px;" id="container">
+    <form action="" method="GET">
+      
+      <div id="content">
+        <div>
+          <label for="isbn">ISBNを入力してください</label><span class="badge bg-success">必須</span><br>
+          
+          <input type="text" id="isbn" maxlength="13" size="40" placeholder="　　　　１０桁 または１３桁の数字">
+        </div>
+        <div>
+          <p class="h2">[書籍タイトル]</p>
+          <input type="text" id="BookTitle" mame="title" size="80">
+        </div>
+        <br>
+        <div>
+          <p class="h2">[著者]</p>
+          <!-- <p id="BookAuthor"></p> -->
+          <input type="text" id="BookAuthor" mame="authors" size="40">
+        </div>
+        <br>
+        <div>
+          <p class="h2">[ISBN10]</p>
+          <p id="isbn10"></p>
+        </div>
+        <br>
+        <div>
+          <p class="h2">[ISBN13]</p>
+          <p id="isbn13"></p>
 
-
-
-  <div class="container" id="container">
-    <h2>書籍データベース</h2>
-    <div id="content">
-      <div class="form-group">
-        <label for="isbn">ISBNを入力してください:</label>
-        <input type="text" id="isbn" maxlength="13" size="40" placeholder="Input ISBN code">
+        </div>
+        <br>
+        <div>
+          <p class="h2">[出版社]</p>
+          <!-- <p id="Publisher"></p> -->
+          <input type="text" id="Publisher" mame="publisher" size="40">
+        </div>
+        <br>
+        <div>
+          <p class="h2">[出版日]</p>
+          <p id="PublishedDate"></p>
+        </div>
+        <br>
+        <div>
+          <p class="h2">[サムネイル画像]</p>
+          <p id="BookThumbnail"></p>
+        </div>
+        <!-- 画像URLの取得用 -->
+        <div style="display: none;">
+          <p>[URL]</p>
+          <input type="text" id="BookThumbnail2" mame="thumnail">
+        </div>
+        <br>
+        <div>
+          <div class="container-sm">
+            <p class="h2">[書籍概要]</p>
+            <p id="BookDescription"></p>
+          </div>
+        </div>
+        <br>
+        <div>
+          <p class="h2">☆メモ☆</p>
+          <textarea rows="5" cols="80" id="BookMemo" 　name="memo"></textarea>
+        </div>
+        <br>
+        <!-- style="font-size: 1.2em; padding: 15px 40px; background-color: rgb(15, 59, 253);
+          color:aliceblue" -->
+        <div style="padding-bottom:30px">
+          <input type="submit" class="button" id="submit" value="登録する">
+        </div>
       </div>
-
-
-     <div>
-        <p class="h4">書籍タイトル:</p>
-        <input type="text" id="BookTitle" mame="title" size="40">
-      </div>
-
-      <div>
-        <p class="h4">著者:</p>
-        <!-- <p id="BookAuthor"></p> -->
-        <input type="text" id="BookAuthor" mame="authors" size="40">
-      </div>
-
-      <div>
-        <p class="h4">ISBN10:</p>
-        <p id="isbn10"></p>
-      </div>
-
-      <div>
-        <p class="h4">ISBN13:</p>
-        <!-- <p id="isbn13"></p> -->
-        <input type="text" id="isbn13" mame="isbn13" size="40">
-      </div>
-
-      <div>
-        <p class="h4">出版社:</p>
-        <!-- <p id="Publisher"></p> -->
-        <input type="text" id="Publisher" mame="publisher" size="40">
-      </div>
-
-      <div>
-        <p class="h4">出版日:</p>
-        <p id="PublishedDate"></p>
-      </div>
-
-      <div>
-        <p class="h4">書籍サムネイル:</p>
-        <p id="BookThumbnail"></p>
-      </div>
-
-      <div>
-        <p class="h4">書籍概要:</p>
-        <p id="BookDescription"></p>
-      </div>
-
-      <div>
-        <p class="h4">メモ:</p>
-        <textarea class="form-control" rows="5" id="BookMemo"></textarea>
-      </div>
-
-      <button class="btn btn-default" id="submit">登録する</button>
-
-    </div>
-  </div>
+    </form>
+    <!-- </div> -->
 
 </body>
 
