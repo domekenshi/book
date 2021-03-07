@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -14,13 +15,30 @@
 </head>
 <style>
   h1 {
-    padding: 1.65rem 2rem;
-    background-color: rgba(165, 210, 255, .4);
-    background-image:
-      linear-gradient(90deg, rgba(165, 210, 255, .3) 50%, transparent 50%),
-      linear-gradient(rgba(165, 210, 255, .3) 50%, transparent 50%);
-    background-size: 40px 40px;
-  }
+  position: relative;
+  color: #fbfbfb;
+  font-size: 60px;
+  padding: 5px 0;
+  text-align: center;
+  margin: 1em 0;
+  text-shadow:0 5px 5px black;
+}
+h1:before {
+  content: "";
+  position: absolute;
+  top: -19px;
+  left: 50%;
+  width: 250px;
+  height: 128px;
+  border-radius: 50%;
+  border: 5px solid #a5ecc3;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  box-shadow:5px 5px 10px;
+  
+}
 
   .button {
 
@@ -59,9 +77,60 @@
   }
 
   body {
-    background-image: image("img\wood-2045380_1920.jpg");
+    background-repeat: repeat;
+    background-image: url("./img/book-wall-1151405_1920.jpg");
     text-align: center;
     padding: 1em;
+
+    /* overflow: visible !important;
+  background: -webkit-linear-gradient(45deg, #085078 10%, #85d8ce 90%);
+  background: -moz-linear-gradient(45deg, #085078 10%, #85d8ce 90%);
+  background: -ms-linear-gradient(45deg, #085078 10%, #85d8ce 90%);
+  background: -o-linear-gradient(45deg, #085078 10%, #85d8ce 90%);
+  background: linear-gradient(45deg, #085078 10%, #85d8ce 90%); */
+  }
+
+  /* レーティングのCSS */
+  .rating {
+    display: inline-flex;
+    flex-direction: row-reverse;
+  }
+
+  .hidden--visually {
+    border: 0;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .rating__label {
+    cursor: pointer;
+    color: gray;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  .rating__icon::before {
+    content: "★";
+  }
+
+  .rating__input:hover~.rating__label {
+    color: lightgray;
+  }
+
+  .rating__input:checked~.rating__label {
+    color: goldenrod;
+  }
+
+  #star {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 1rem 0.5rem;
   }
 </style>
 
@@ -70,19 +139,20 @@
   <!-- とび先のURLの指定
 画像をどうやって送るか -->
   <h1>本の追加・登録</h1>
-  <div class="container" style="background-color: rgb(245, 239, 244);padding: 20px;" id="container">
+  <div class="container" style="background-color: rgb(251, 250, 248);padding: 20px;" id="container">
     <form action="" method="GET">
 
       <div id="content">
         <div>
           <label for="isbn">ISBNを入力してください</label><span class="badge bg-danger">入力すると自動入力</span><br>
 
-          <input type="text" id="isbn" maxlength="13" size="40" placeholder="　　　　　１０桁 または１３桁の数字">
+          <input type="text" id="isbn" maxlength="13" size="40" placeholder="　　　　　１０桁 または１３桁の数字" required>
         </div>
         <div id="message"></div>
         <div>
           <p class="h2">[書籍タイトル]<br></p>
-          <input type="text" id="BookTitle" mame="title" size="80" placeholder="　　タイトルが完全に一致しない場合別な本の情報が自動入力される可能性があります">
+          <input type="text" id="BookTitle" mame="title" size="80" required
+            placeholder="　　タイトルが完全に一致しない場合別な本の情報が自動入力される可能性があります">
           <span class="badge bg-warning">注意</span>
         </div>
         <br>
@@ -105,17 +175,57 @@
         </div>
         <br>
         <div>
+          <p class="h2">[購入日]</p>
+          <input type="date" name="date">
+        </div>
+        <br>
+        <div>
+          <p class="h2">[評価]</p>
+          <div class="rating" id="star">
+            <input class="rating__input hidden--visually" type="radio" id="5-star" name="evaluation" value="5"
+              required />
+            <label class="rating__label" for="5-star" title="5 out of 5 rating">
+              <span class="rating__icon"></span>
+              <span class="hidden--visually">5 out of 5 rating</span>
+            </label>
+
+            <input class="rating__input hidden--visually" type="radio" id="4-star" name="evaluation" value="4" />
+            <label class="rating__label" for="4-star" title="4 out of 5 rating">
+              <span class="rating__icon"></span>
+              <span class="hidden--visually">4 out of 5 rating</span>
+            </label>
+
+            <input class="rating__input hidden--visually" type="radio" id="3-star" name="evaluation" value="3" />
+            <label class="rating__label" for="3-star" title="3 out of 5 rating">
+              <span class="rating__icon"></span>
+              <span class="hidden--visually">3 out of 5 rating</span>
+            </label>
+
+            <input class="rating__input hidden--visually" type="radio" id="2-star" name="evaluation" value="2" />
+            <label class="rating__label" for="2-star" title="2 out of 5 rating">
+              <span class="rating__icon"></span>
+              <span class="hidden--visually">2 out of 5 rating</span>
+            </label>
+
+            <input class="rating__input hidden--visually" type="radio" id="1-star" name="evaluation" value="1" />
+            <label class="rating__label" for="1-star" title="1 out of 5 rating">
+              <span class="rating__icon"></span>
+              <span class="hidden--visually">1 out of 5 rating</span>
+            </label>
+          </div>
+        </div>
+        <div>
           <p class="h2">[ISBN10]</p>
           <p id="isbn10"></p>
         </div>
         <br>
-        <div>
+        <!-- <div>
           <p class="h2">[ISBN13]</p>
           <p id="isbn13"></p>
 
         </div>
-        <br>
-        
+        <br> -->
+
         <div>
           <p class="h2">[出版日]</p>
           <p id="PublishedDate"></p>
@@ -125,17 +235,18 @@
           <p class="h2">[サムネイル画像]</p>
           <p id="BookThumbnail"></p>
         </div>
-        
+        <br>
         <!-- 画像URLの取得用 -->
         <div style="display: none;">
           <p>[URL]</p>
           <input type="text" id="BookThumbnail2" mame="thumnail">
         </div>
         <br>
-        <div>
-          <div class="container-sm">
+        <div class="row">
+          <div class="col-md">
             <p class="h2">[書籍概要]</p>
-            <p id="BookDescription"></p>
+            <!-- <p id="BookDescription"></p> -->
+            <textarea rows="5" cols="80" id="BookDescription" 　name="memo" disabled></textarea>
           </div>
         </div>
         <br>
@@ -144,8 +255,6 @@
           <textarea rows="5" cols="80" id="BookMemo" 　name="memo"></textarea>
         </div>
         <br>
-        <!-- style="font-size: 1.2em; padding: 15px 40px; background-color: rgb(15, 59, 253);
-          color:aliceblue" -->
         <div style="padding-bottom:30px">
           <input type="submit" class="button" id="submit" value="登録する">
         </div>
