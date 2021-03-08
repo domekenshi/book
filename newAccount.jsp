@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- <link rel="stylesheet" href="./css/style.css"> -->
 <title>新規登録画面</title>
 </head>
 <body style="text-align: center">
@@ -27,18 +28,18 @@
     </form>
 <!-- パスワードのエラーチェック -->
     <script>
-					function CheckPassword(confirm) {
-						// 入力値取得
-						let input1 = password.value;
-						let input2 = confirm.value;
-						// パスワード比較
-						if (input1 != input2) {
-							confirm.setCustomValidity("入力値が一致しません。");
-						} else {
-							confirm.setCustomValidity('');
-						}
-					}
-				</script>
+                    function CheckPassword(confirm) {
+                        // 入力値取得
+                        let input1 = password.value;
+                        let input2 = confirm.value;
+                        // パスワード比較
+                        if (input1 != input2) {
+                            confirm.setCustomValidity("入力値が一致しません。");
+                        } else {
+                            confirm.setCustomValidity('');
+                        }
+                    }
+                </script>
 
 
 

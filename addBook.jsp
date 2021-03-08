@@ -20,13 +20,10 @@ $(function () {
     // フォームID [isbn] に入力があった場合、jQueryの関数 [change] を使ってISBNコードを取得。
     // Google Books APIへ問い合わせを行う。
     // もしGoogle Books APIに書籍が存在しない(totalItemsが0の場合)、入力欄に表示されたデータをすべて消去し、該当書籍がないとメッセージを表示する
-
     $("#isbn").change(() => {
       const isbn = $("#isbn").val();
       let url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
-
       $.getJSON(url, function (data) {
-
         if (!data.totalItems) {
           $("#isbn").val("");
           $("#BookTitle").text("");
@@ -38,13 +35,10 @@ $(function () {
           $("#BookThumbnail").text("");
           $("#BookDescription").text("");
           $("#BookMemo").val("");
-
 //エラーメッセージ
           $("#message").html('<p class="bg-warning" id="warning">該当する書籍がありません。</p>');
           $('#message > p').fadeOut(3000);
-
         } else {
-
           // 該当書籍が存在した場合、JSONをパースして入力項目のデータを取得する
           //タイトル検索用に一文追加
           $("#isbn").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
@@ -57,17 +51,13 @@ $(function () {
           $("#BookDescription").text(data.items[0].volumeInfo.description);
           $("#BookThumbnail").html('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
           $("#BookThumbnail2").val('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
-
         }
-
       });
     });
   // タイトルが変更された時の処理
-
   $("#BookTitle").change(() => {
       const intitle = $("#BookTitle").val();
       let url = "https://www.googleapis.com/books/v1/volumes?q=intitle:" + intitle;
-
       $.getJSON(url, function (data) {
         if (!data.totalItems) {
           $("#isbn").val("");
@@ -80,13 +70,9 @@ $(function () {
           $("#BookThumbnail").text("");
           $("#BookDescription").val("");
           $("#BookMemo").val("");
-
-
           $("#message").html('<p class="bg-warning" id="warning">該当する書籍がありません。</p>');
           $('#message > p').fadeOut(3000);
-
         } else {
-
           // 該当書籍が存在した場合、JSONをパースして入力項目のデータを取得する
           $("#isbn").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
           $("#BookTitle").val(data.items[0].volumeInfo.title);
@@ -101,18 +87,17 @@ $(function () {
         }
       });
     });
-
   window.addEventListener('DOMContentLoaded', ()=>{
-	  document.querySelectorAll('.input_field').forEach(x=>{
-	    x.addEventListener('input',()=>{
-	      var reg=/[^0-9]/g;
-	      var val=x.value;
-	      if(reg.test(val)){
-	        x.value=val.replace(reg,'');
-	      }
-	    });
-	  });
-	});
+      document.querySelectorAll('.input_field').forEach(x=>{
+        x.addEventListener('input',()=>{
+          var reg=/[^0-9]/g;
+          var val=x.value;
+          if(reg.test(val)){
+            x.value=val.replace(reg,'');
+          }
+        });
+      });
+    });
   });
 </script>
 <style>
@@ -122,7 +107,6 @@ body {
     text-align: center;
     padding: 2em;
 }
-
 .button {
     display: inline-block;
     border-radius: 5%;
@@ -148,7 +132,6 @@ body {
     border: 2px solid #000066;
     /* 枠の指定 */
 }
-
 .button:hover {
     box-shadow: none;
     /* カーソル時の影消去 */
@@ -157,13 +140,11 @@ body {
     background: #ffffff;
     /* 文字色     */
 }
-
 /* レーティングのCSS */
 .rating {
     display: inline-flex;
     flex-direction: row-reverse;
 }
-
 .hidden--visually {
     border: 0;
     clip: rect(1px, 1px, 1px, 1px);
@@ -175,32 +156,26 @@ body {
     position: absolute;
     width: 1px;
 }
-
 .rating__label {
     cursor: pointer;
     color: gray;
     padding-left: 0.25rem;
     padding-right: 0.25rem;
 }
-
 .rating__icon::before {
     content: "★";
 }
-
 .rating__input:hover ~.rating__label {
     color: lightgray;
 }
-
 .rating__input:checked ~.rating__label {
     color: goldenrod;
 }
-
 #star {
     text-align: center;
     font-size: 1.5rem;
     padding: 1rem 0.5rem;
 }
-
 input{
 text-align:center;
 }
