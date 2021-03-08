@@ -18,21 +18,21 @@
 <!-- リンクは調整する -->
     <nav class="navbar navbar-expand-lg navbar-light bg-success fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand text-white" href="#">本棚</a>
+    <a class="navbar-brand text-white" href="/Bookshelf/BookList">　本棚　　</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="#">本を追加する</a>
+          <a class="nav-link active text-white" aria-current="page" href="Bookshelf/AddBook">追加・登録　　　</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="#">欲しいものリスト</a>
+          <a class="nav-link text-white" href="Bookshelf/WantBook">ほしいものリスト　　　</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            本を買いにいく
+          <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            購入
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="https://www.amazon.co.jp/book/s?k=book">Amazon</a></li>
@@ -42,13 +42,13 @@
             <li><a class="dropdown-item" href="https://www.kinokuniya.co.jp/">紀伊国屋</a></li>
           </ul>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link disabled text-white" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
+        </li> -->
       </ul>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success text-white" type="submit">Search</button>
+        <button class="btn btn-outline-info text-white" type="submit">search</button>
       </form>
     </div>
   </div>
@@ -56,6 +56,7 @@
 <br>
 <br>
 <br>
+
 
 
     <!-- Optional JavaScript; choose one of the two! -->
