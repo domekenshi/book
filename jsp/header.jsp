@@ -14,11 +14,15 @@
 <title>header</title>
 </head>
 <body>
+
+
+
+
 <header class="sticky-top">
 <!-- リンクは調整する -->
     <nav class="navbar navbar-expand-lg navbar-light bg-success fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand text-white" href="/Bookshelf/BookList">
+    <a class="navbar-brand text-white" href="/Bookshelf/Main?menu=list">
     <img src="https://img.icons8.com/color/48/000000/book-shelf.png" width="30" height="24">　本棚　　</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -26,11 +30,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="Bookshelf/AddBook">
+          <a class="nav-link active text-white" aria-current="page" href="/Bookshelf/Main?menu=list">
           <img src="https://img.icons8.com/color/48/000000/save-as.png" width="30" height="24"/>追加・登録　　</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="Bookshelf/WantBook">
+          <a class="nav-link text-white" href="/Bookshelf/Main?menu=list">
           <img src="https://img.icons8.com/color/48/000000/like--v3.png" width="30" height="24"/>ほしいものリスト　　</a>
         </li>
         <li class="nav-item dropdown">
@@ -46,9 +50,6 @@
             <li><a class="dropdown-item" href="https://www.kinokuniya.co.jp/">紀伊国屋</a></li>
           </ul>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link disabled text-white" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li> -->
       </ul>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

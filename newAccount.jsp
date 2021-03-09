@@ -12,35 +12,33 @@
     <br>
 
     <form action="/Bookshelf/NewAccount" method="post">
-        ユーザー名<br> <input type="text" name="name" maxlength='20'placeholder="田中 太郎" required><br>
+        ユーザー名<br> <input type="text" name="name" maxlength='20' placeholder="　　　　田中 太郎" required><br>
         <div class="form-group">
-            <label>パスワード</label><br> <input type="password" maxlength='10' class="form-control"
-                name="pass1" id="password"placeholder="(10文字以内)" required>
+            <label>パスワード</label><br> <input type="password" maxlength='10' class="form-control" name="pass1"
+                id="password" placeholder="　　　(10文字以内)" required>
         </div>
         <div class="form-group">
             <label>パスワード (再確認)</label><br> <input type="password" maxlength='10' class="form-control" name="pass2"
                 oninput="CheckPassword(this)" required>
         </div>
 
-        メールアドレス<br> <input type="email" name="mailaddress"placeholder="sample@example.come" required><br>
-         <input type="hidden" name="menu" value="1">
-         <input type="submit"style="margin-top:20px;"  value="登録する"><br>
+        メールアドレス<br> <input type="email" name="mailaddress" placeholder="sample@example.com" required><br>
+        <input type="hidden" name="menu" value="1"> <input type="submit" style="margin-top: 20px;" value="登録する"><br>
     </form>
-<!-- パスワードのエラーチェック -->
+    <!-- パスワードのエラーチェック -->
     <script>
-                    function CheckPassword(confirm) {
-                        // 入力値取得
-                        let input1 = password.value;
-                        let input2 = confirm.value;
-                        // パスワード比較
-                        if (input1 != input2) {
-                            confirm.setCustomValidity("入力値が一致しません。");
-                        } else {
-                            confirm.setCustomValidity('');
-                        }
-                    }
-                </script>
-
+					function CheckPassword(confirm) {
+						// 入力値取得
+						let input1 = password.value;
+						let input2 = confirm.value;
+						// パスワード比較
+						if (input1 != input2) {
+							confirm.setCustomValidity("入力値が一致しません。");
+						} else {
+							confirm.setCustomValidity('');
+						}
+					}
+				</script>
 
 
 </body>

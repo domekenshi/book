@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <title>登録決定画面</title>
 </head>
-<body style="text-align:center;">
+<body>
 
     ${user.userName}<br>
     ${user.address}<br>

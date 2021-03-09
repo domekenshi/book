@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -222,7 +223,7 @@ text-align:center;
                 <div>
                     <p class="h2">[価格]</p>
                     <!-- <p id="Publisher"></p> -->
-                    <input type="text" id="Price" class="input_field" name="price"  size="40" >
+                    <input type="number" id="Price" min="0" pattern="(0|[1-9][0-9]*)" class="input_field" name="price"  size="40" >
                 </div>
                 <br>
                 <div>
@@ -265,7 +266,7 @@ text-align:center;
 
                 <div>
                     <p class="h2">[出版日]</p>
-                    <input type="text" id="PublishedDate" name="publishDate" disabled>
+                    <input type="date" id="PublishedDate" name="publishDate">
                     <!-- <p id="PublishedDate"></p> -->
                 </div>
                 <br>
@@ -283,7 +284,6 @@ text-align:center;
                 <div class="row">
                     <div class="col-md">
                         <p class="h2">[書籍概要]</p>
-                        <!-- <p id="BookDescription"></p> -->
                         <textarea rows="5" cols="80" id="BookDescription" name="explain" disabled></textarea>
                     </div>
                 </div>
