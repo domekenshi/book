@@ -3,10 +3,11 @@
 
 <footer class="footer">
 <div class="container">
-  <div class="text-muted">Place sticky footer content here.</div>
-  <small>© 2021 toy</small>
+  <div class="text-muted">My Bookshelf　制作委員会</div>
+  <small>Copyright © 2021 toy</small>
   <a href="/Bookshelf/Menu?menu=logout">ログアウト</a>
   </div>
+
 </footer>
 <style>
 html {
@@ -16,6 +17,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  text-align:center;
 }
 .footer {
   position: absolute;
@@ -25,12 +27,9 @@ body {
   height: 100px;
   background-color: #f5f5f5;
 }
-
-
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
-
 .container {
   width: auto;
   max-width: 680px;
