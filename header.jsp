@@ -49,6 +49,11 @@
             <li><a class="dropdown-item" href="https://shop.tsutaya.co.jp/book.html">蔦屋書店</a></li>
             <li><a class="dropdown-item" href="https://www.kinokuniya.co.jp/">紀伊国屋</a></li>
           </ul>
+          <li>　　
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/Bookshelf/Main?menu=list">
+          <img src="https://img.icons8.com/color/48/000000/gender-neutral-user.png" width="30" height="24"/>設定　　</a>
         </li>
       </ul>
       <form class="d-flex">

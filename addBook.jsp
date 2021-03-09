@@ -223,7 +223,7 @@ text-align:center;
                 <div>
                     <p class="h2">[価格]</p>
                     <!-- <p id="Publisher"></p> -->
-                    <input type="number" id="Price" min="0" pattern="(0|[1-9][0-9]*)" class="input_field" name="price"  size="40" >
+                    <input type="number" id="Price" pattern="([1-9][0-9]*)" class="input_field" name="price"  size="40" >
                 </div>
                 <br>
                 <div>
