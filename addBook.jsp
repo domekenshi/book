@@ -104,27 +104,57 @@ input {
     text-align: center;
 }
 /* ラジオボタン */
-th {
-    text-align: left;
+.istable th {text-align:left;
+
 }
 
-th, td {
-    padding: 10px;
+.istable th, td {
+    padding: 5px;
 }
 
-tr:nth-child(odd) {
-    background-color: #ddd;
+.istable tr:nth-child(odd) {
+    background-color: #1E90FF;
 }
 
-.affiliation_wrap:not(:last-child) {
-    padding-right: 30px;
+.istable.affiliation_wrap:not(:last-child) {
+    padding-right: 10px;
 }
 
-input[type="text"] {
+.istable input[type="text"] {
     width: 100%;
     box-sizing: border-box;
     font-size: 15px;
 }
+
+/* booktitle側のCSS */
+.bttable th {text-align:left;
+
+}
+
+.bttable th, td {
+    padding: 5px;
+}
+
+.bttable tr:nth-child(odd) {
+    background-color: #00BFFF;
+}
+
+.bttable.affiliation_wrap:not(:last-child) {
+    padding-right: 30px;
+}
+
+.bttable input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 </style>
 <title>検索と追加</title>
 </head>
@@ -140,6 +170,7 @@ $(function () {
         if (!data.totalItems) {
           $("#isbn").val("");
           $("#BookTitle").text("");
+          $("#BT").text("");
           $("#BookAuthor").text("");
           $("#isbn10").text("");
           $("#isbn13").val("");
@@ -156,6 +187,7 @@ $(function () {
           //タイトル検索用に一文追加
           $("#isbn").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
           $("#BookTitle").val(data.items[0].volumeInfo.title);
+          $("#BT").val(data.items[0].volumeInfo.title);
           $("#isbn13").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
           $("#isbn10").text(data.items[0].volumeInfo.industryIdentifiers[1].identifier);
           $("#BookAuthor").val(data.items[0].volumeInfo.authors[0]);
@@ -175,6 +207,7 @@ $(function () {
         if (!data.totalItems) {
           $("#isbn").val("");
           $("#BookTitle").text("");
+          $("#BT").text("");
           $("#BookAuthor").text("");
           $("#isbn10").text("");
           $("#isbn13").val("");
@@ -189,6 +222,7 @@ $(function () {
           // 該当書籍が存在した場合、JSONをパースして入力項目のデータを取得する
           $("#isbn").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
           $("#BookTitle").val(data.items[0].volumeInfo.title);
+          $("#BT").val(data.items[0].volumeInfo.title);
           $("#isbn13").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
           $("#isbn10").text(data.items[0].volumeInfo.industryIdentifiers[1].identifier);
           $("#BookAuthor").val(data.items[0].volumeInfo.authors[0]);
@@ -212,15 +246,18 @@ $(function () {
       });
     });
 
-//変数target13に、入力不可にしたい項目を定義("isbn13"の入力可否）
-  var target13 = document.getElementById("isbn13");
+  ////////////////////////////////////////////////
 
-  // 変数target13の要素を入力不可にする
+    //最初にdisabledにしておきたい二つ
+ var target13 = document.getElementById("isbn13");
   target13.disabled = true;
-
-  // 変数triggerに、入力不可を解除するきっかけにしたい項目を定義
+  var bt = document.getElementById("BT");
+  bt.disabled = true;
+  // 入力不可を解除するきっかけにしたい項目を定義
   var trigger13 = document.getElementById("affiliation1");
+  var tri = document.getElementById("aff1");
 
+  ///////
   // 入力不可を解除する条件を定義
   trigger13.addEventListener("click", function(){
       if(trigger13.checked){
@@ -229,8 +266,16 @@ $(function () {
          }
     }, true);
 
-  // 変数trigger14に、入力不可を解除するきっかけにしたい項目を定義
+  tri.addEventListener("click", function(){
+	     if(tri.checked){
+
+	       bt.disabled = true;
+	        }
+	   }, true);
+  ///////
+  // 入力不可を解除するきっかけにしたい項目を定義
   var trigger14 = document.getElementById("affiliation2");
+  var tri2 = document.getElementById("aff2");
 
   // 入力不可を解除する条件を定義
   trigger14.addEventListener("click", function(){
@@ -240,17 +285,24 @@ $(function () {
          }
     }, false);
 
+  tri2.addEventListener("click", function(){
+	     if(tri2.checked){
 
+	       bt.disabled = false;
+	        }
+	   }, false);
 
-//変数targetに、入力不可にしたい項目を定義("isbn"の入力可否）
+  ////////////////
+//入力不可にしたい項目を定義("isbn"の入力可否）
   var target = document.getElementById("isbn");
-
+  var book = document.getElementById("BookTitle");
   // 初期はISBN検索にチェックがついているので入力可
   target.disabled = false;
-
+  book.disabled = false;
   // 変数triggerに、入力不可を解除するきっかけにしたい項目を定義
   var trigger = document.getElementById("affiliation1");
-
+  var btri = document.getElementById("aff1");
+////////////////////
   // 入力不可を解除する条件を定義
   trigger.addEventListener("click", function(){
       if(trigger.checked){
@@ -259,9 +311,15 @@ $(function () {
          }
     }, false);
 
+  btri.addEventListener("click", function(){
+	     if(btri.checked){
+
+	       book.disabled = false;
+	        }
+	   }, false);
   // 変数trigger2に、入力不可を解除するきっかけにしたい項目を定義
   var trigger2 = document.getElementById("affiliation2");
-
+  var btri2 = document.getElementById("aff2");
   // 入力不可を解除する条件を定義
   trigger2.addEventListener("click", function(){
       if(trigger2.checked){
@@ -269,75 +327,19 @@ $(function () {
         target.disabled = true;
          }
     }, true);
+  btri2.addEventListener("click", function(){
+	     if(btri2.checked){
+
+	       book.disabled = true;
+	        }
+	   }, true);
   });
 ////////////////////////////////////////////////////////
-/* タイトル検索の分岐 */
-  var bt = document.getElementById("BT");
-
-  bt.disabled = true;
-
-  // 変数triggerに、入力不可を解除するきっかけにしたい項目を定義
-  var tri = document.getElementById("aff1");
-
-  // 入力不可を解除する条件を定義
-  tri.addEventListener("click", function(){
-      if(tri.checked){
-        // ここに条件をクリアした時の動作を入れる
-        bt.disabled = true;
-         }
-    }, true);
-
-  // 変数trigger14に、入力不可を解除するきっかけにしたい項目を定義
-  var tri2 = document.getElementById("aff2");
-
-  // 入力不可を解除する条件を定義
-  tri2.addEventListener("click", function(){
-      if(tri2.checked){
-        // ここに条件をクリアした時の動作を入れる
-        bt.disabled = false;
-         }
-    }, false);
-
-
-
-//変数targetに、入力不可にしたい項目を定義("isbn"の入力可否）
-  var target = document.getElementById("isbn");
-
-  // 初期はISBN検索にチェックがついているので入力可
-  target.disabled = false;
-
-  // 変数triggerに、入力不可を解除するきっかけにしたい項目を定義
-  var trigger = document.getElementById("affiliation1");
-
-  // 入力不可を解除する条件を定義
-  trigger.addEventListener("click", function(){
-      if(trigger.checked){
-        // ここに条件をクリアした時の動作を入れる
-        target.disabled = false;
-         }
-    }, false);
-
-  // 変数trigger2に、入力不可を解除するきっかけにしたい項目を定義
-  var trigger2 = document.getElementById("affiliation2");
-
-  // 入力不可を解除する条件を定義
-  trigger2.addEventListener("click", function(){
-      if(trigger2.checked){
-        // ここに条件をクリアした時の動作を入れる
-        target.disabled = true;
-         }
-    }, true);
-  });
-
-
-
-
 //文字数カウント
   function ShowLength( str ) {
        document.getElementById("inputlength").innerHTML = str.length + "文字";
     }
 </script>
-
 
 <body>
     <jsp:include page="/WEB-INF/jsp/header.jsp" />
@@ -348,7 +350,8 @@ $(function () {
     <br>
     <div class="container" style="background-color: rgb(251, 250, 248); padding: 20px;" id="container">
         <form action="/Bookshelf/AddBook" method="POST">
-<table>
+         <div class="container">
+            <table border="1" class="istable align=left">
                 <tr>
                     <th>ISBN検索</th>
                     <td>
@@ -359,6 +362,9 @@ $(function () {
                         </div>
                     </td>
                 </tr>
+            </table>
+            <br>
+            <table border="1" class="bttable">
 
                 <tr>
                     <th>タイトル検索</th>
@@ -371,33 +377,39 @@ $(function () {
                     </td>
                 </tr>
             </table>
+            </div>
+            <br>
             <div id="content">
                 <div>
-                    <label style="padding: 5px;" for="isbn">「ISBN検索窓」</label><br><span style="padding-left: 5px"
-                        class="badge bg-danger">ISBN検索用</span><br> <input type="text" id="isbn" name="isbn"
-                        maxlength="40" size="40" placeholder="手入力の場合下の検索窓に入力してください">
+                    <label style="padding: 5px;" for="isbn">「タイトル」か「ISBN」を入力すると自動で検索」</label><br> <span
+                        style="padding-left: 5px" class="badge bg-success">自動入力</span><br><br> <input type="text"
+                        id="isbn" name="isbn" maxlength="40" size="40" placeholder="ISBN検索">
                 </div>
                 <br>
+                <!-- エラーメッセージ用 -->
                 <div id="message"></div>
 
                 <div>
-                    <p class="h2">[ISBN13桁以上]</p>
-                    <span class="badge bg-danger">手入力用</span> <input type="text" id="isbn13" name="isbn2" maxlength="40"
-                        size="40" placeholder="　手入力の場合こちらに入力してください" pattern="([1-9][0-9]*)" required>
+                    <input type="text" id="BookTitle" name="title" size="80"
+                        placeholder="　タイトル検索">
+                </div>
+                <hr>
+                <label style="padding: 5px;" for="isbn">本が見つからなかった時は自分で編集</label><br>
+                <div>
+                    <p class="h2">[ISBN13]</p>
+                    <br>
+                     <input type="text" id="isbn13" name="isbn2"
+                        maxlength="40" size="40" placeholder="自動検索を使うと自動的に入力されます" pattern="([1-9][0-9]*)" required>
+                        <span class="badge bg-danger">必須</span><br>
                     <!-- <p id="isbn13"></p> -->
                 </div>
                 <br>
                 <div>
-                    <p class="h2">
-                        [書籍タイトル]<br>
-                    </p> <span class="badge bg-danger">自動入力用</span>
-                    <input type="text" id="BookTitle" name="title" size="80"
-                        placeholder="　タイトルが完全に一致しない場合別な本の情報が自動入力される可能性があります">
+                    <p class="h2">[書籍タイトル]</p>
                 </div>
                 <br>
-                <span class="badge bg-danger">手動入力用</span>
-                    <input type="text" id="BT" name="title2" size="80" required>
-                <br>
+                 <input type="text" id="BT" name="title2" size="80" placeholder="自動検索を使うと自動的に入力されます" required>
+                 <span class="badge bg-danger">必須</span><br>
                 <div>
                     <p class="h2">[著者]</p>
                     <!-- <p id="BookAuthor"></p> -->
@@ -477,7 +489,7 @@ $(function () {
                 <div>
                     <p class="h2">☆メモ☆</p>
                     <textarea rows="5" cols="80" id="BookMemo" name="memo" maxlength="100" placeholder="100文字以内"
-                    onkeyup="ShowLength(value);"></textarea>
+                        onkeyup="ShowLength(value);"></textarea>
                     <p id="inputlength">0文字</p>
                 </div>
                 <br>
