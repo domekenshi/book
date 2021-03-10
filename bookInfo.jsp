@@ -4,11 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="./css/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<link rel="stylesheet" href="./css/style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
 body {
     background-repeat: repeat;
@@ -65,6 +66,7 @@ input {
     display: flex;
     justify-content: space-evenly;
 }
+
 /* ボタン */
 .button {
     display: inline-block;
@@ -87,32 +89,11 @@ input {
     background: #ffffff; /* 文字色     */
 }
 
-.card {
-    background-color: red;
-    text-align: right;
-}
+//
+文字数カウント
+  function ShowLength( str ) {document
+    .getElementById("inputlength").innerHTML = str.length + "文字";
 
-a.btn--orange {
-    color: #fff;
-    background-color: #eb6100;
-    border-bottom: 5px solid #b84c00;
-}
-
-a.btn--orange:hover {
-    margin-top: 3px;
-    color: #fff;
-    background: #f56500;
-    border-bottom: 2px solid #b84c00;
-}
-
-a.btn--shadow {
-    -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
-    box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
-}
-
-.imgUrl {
-    text-align: left;
-    float: left;
 }
 </style>
 <title>編集</title>
@@ -121,109 +102,52 @@ a.btn--shadow {
 
     <script>
     $(function () {
-        window.addEventListener('DOMContentLoaded', ()=>{
-              document.querySelectorAll('.input_field').forEach(x=>{
-                x.addEventListener('input',()=>{
-                  var reg=/[^0-9]/g;
-                  var val=x.value;
-                  if(reg.test(val)){
-                    x.value=val.replace(reg,'');
-                  }
-                });
-              });
-            });
+    	window.addEventListener('DOMContentLoaded', ()=>{
+    	      document.querySelectorAll('.input_field').forEach(x=>{
+    	        x.addEventListener('input',()=>{
+    	          var reg=/[^0-9]/g;
+    	          var val=x.value;
+    	          if(reg.test(val)){
+    	            x.value=val.replace(reg,'');
+    	          }
+    	        });
+    	      });
+    	    });
 
     }
-    function clickBtn2(){
-
-        if (document.getElementById("b2").disabled === true){
-            // disabled属性を削除
-            document.getElementById("b2").removeAttribute("disabled");
-            document.getElementById("b2").style.color = "black";
-        }else{
-            // disabled属性を設定
-            document.getElementById("b2").setAttribute("disabled", true);
-            document.getElementById("b2").style.color = "White";
-        }
-    }
-                </script>
+				</script>
     <jsp:include page="/WEB-INF/jsp/header.jsp" />
+
     <br>
     <br>
     <h1>本の情報を編集</h1>
     <br>
     <br>
-    <div class="container bg-white">
-        <div class="imgUrl">
-            ${book.imgURL}aaaaaaaaaaaa
-        </div>
-
-        <form action="" method="POST">
-
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput"> <label
-                    for="floatingInput">タイトル</label>
-            </div>
-            <div class="form-floating">
-                <input type="text" class="form-control" id="floatingIsbn" placeholder="ISBN"> <label
-                    for="floatingIsbn">ISBN</label>
-            </div>
-            <div>
-                <!-- 登録時評価をつけていたらその評価。何もつけていなかったら☆０個の状態で表示 -->
-                <c:choose>
-                    <c:when test="${book.evaluation != 0}">${book.evaluation}</c:when>
-                    <c:otherwise>
-                        <div class="rating" id="star">
-                            <input class="rating__input hidden--visually" type="radio" id="5-star" name="evaluation"
-                                value="5" /> <label class="rating__label" for="5-star" title="5 out of 5 rating">
-                                <span class="rating__icon"></span> <span class="hidden--visually">5 out of 5
-                                    rating</span>
-                            </label> <input class="rating__input hidden--visually" type="radio" id="4-star" name="evaluation"
-                                value="4" /> <label class="rating__label" for="4-star" title="4 out of 5 rating">
-                                <span class="rating__icon"></span> <span class="hidden--visually">4 out of 5
-                                    rating</span>
-                            </label> <input class="rating__input hidden--visually" type="radio" id="3-star" name="evaluation"
-                                value="3" /> <label class="rating__label" for="3-star" title="3 out of 5 rating">
-                                <span class="rating__icon"></span> <span class="hidden--visually">3 out of 5
-                                    rating</span>
-                            </label> <input class="rating__input hidden--visually" type="radio" id="2-star" name="evaluation"
-                                value="2" /> <label class="rating__label" for="2-star" title="2 out of 5 rating">
-                                <span class="rating__icon"></span> <span class="hidden--visually">2 out of 5
-                                    rating</span>
-                            </label> <input class="rating__input hidden--visually" type="radio" id="1-star" name="evaluation"
-                                value="1" /> <label class="rating__label" for="1-star" title="1 out of 5 rating">
-                                <span class="rating__icon"></span> <span class="hidden--visually">1 out of 5
-                                    rating</span>
-                            </label>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </form>
+    <div class="container-xl  pb-1rem center-block">
 
 
-
-
-
-
-    </div>
-    <%-- <div class="container-xl">
-        <div class="card mb-5" style="max-width: 1500px; margin-bottom: 20;">
-            <div class="row
-    g-1">
-                <div class="col-md-3 border=2" style="align: center;">${book.imgURL}</div>
+        <div class="card mb-3" style="max-width: 1500px;">
+            <div class="row g-0">
+                <div class="col-md-3 border=1">
+                    ${book.imgURL}
+                    <!-- <img src="..." alt="..."> -->
+                </div>
                 <div class="col-md-8">
-                    <form action="" method="POST">
-                        <div class="card-body">
-                            <h4>タイトル</h4>
+                    <form action="/Bookshelf/BookList" method="POST">
+                        <div class="card-body pb-0.5rem">
+                            <p>タイトル</p>
                             <h5 class="card-title">
-                                <input type="text" name="title" size="70" required>
-                                <c:out value="${book.title}" />
+                                <input type="text" name="title" size="80" value="${book.title}" required>
+                                <%-- <c:out value="${book.title}" /> --%>
                             </h5>
-                            <!-- 登録時評価をつけていたらその評価。何もつけていなかったら☆０個の状態で表示
-    -->
                             <c:choose>
-                                <c:when test="${book.evaluation != 0}">${book.evaluation}</c:when>
+                                <c:when test="${book.evaluation != 0}">
+                                <p>現在の評価</p>
+                               ★ <input type="number" name="evaluation" min="0" max="5" value="${book.evaluation}">つです。
+
+
+
+                                </c:when>
                                 <c:otherwise>
                                     <div class="rating" id="star">
                                         <input class="rating__input hidden--visually" type="radio" id="5-star"
@@ -232,8 +156,7 @@ a.btn--shadow {
                                             class="hidden--visually">5 out of 5 rating</span>
                                         </label> <input class="rating__input hidden--visually" type="radio" id="4-star"
                                             name="evaluation" value="4" /> <label class="rating__label" for="4-star"
-                                            title="4 out of 5
-    rating"> <span class="rating__icon"></span> <span
+                                            title="4 out of 5 rating"> <span class="rating__icon"></span> <span
                                             class="hidden--visually">4 out of 5 rating</span>
                                         </label> <input class="rating__input hidden--visually" type="radio" id="3-star"
                                             name="evaluation" value="3" /> <label class="rating__label" for="3-star"
@@ -241,8 +164,7 @@ a.btn--shadow {
                                             class="hidden--visually">3 out of 5 rating</span>
                                         </label> <input class="rating__input hidden--visually" type="radio" id="2-star"
                                             name="evaluation" value="2" /> <label class="rating__label" for="2-star"
-                                            title="2 out of 5
-    rating"> <span class="rating__icon"></span> <span
+                                            title="2 out of 5 rating"> <span class="rating__icon"></span> <span
                                             class="hidden--visually">2 out of 5 rating</span>
                                         </label> <input class="rating__input hidden--visually" type="radio" id="1-star"
                                             name="evaluation" value="1" /> <label class="rating__label" for="1-star"
@@ -254,54 +176,62 @@ a.btn--shadow {
                             </c:choose>
                             <div class="inner">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><h4>ISBN</h4>
-                                        <br> <input type="text" id="b2" name="isbn" size="60"> <c:out
-                                            value="${book.isbn}" /><input type="button" value="活性/非活性"
-                                        onclick="clickBtn2()"></li>
-
-                                    <li class="list-group-item"><h4>著者</h4>
-                                        <br> <input type="text" name="authors" size="60"> <c:out
-                                            value="${book.authors}" /></li>
-                                    <li class="list-group-item"><h4>出版社</h4>
-                                        <br> <input type="text" name="publisher" size="60"> <c:out
-                                            value="${book.publisher}" /></li>
-                                    <li class="list-group-item"><h4>出版日</h4>
-                                        <br> <input type="date" name="publishDate" size="40"> <c:out
-                                            value="${book.publishDate}" /></li>
-                                    <li class="list-group-item"><h4>価格</h4>
-                                        <br> <input type="number" name="price" pattern="(0|[1-9][0-9]*)" size="40">
-                                        <c:out value="${book.price}" /></li>
-                                    <li class="list-group-item"><h4>購入日</h4>
-                                        <br> <input type="date" name="getDate" size="60"> <c:out
-                                            value="${book.getDate}" /></li>
-                                    <li class="list-group-item"><h4>進捗</h4> <select name="progress">
-                                            <option value="${book.progress}" /></option>
-                                            <option value="1">既読</option>
-                                            <option value="2">未読</option>
-                                            <option value="3">読書中</option>
-                                    </select></li>
+                                    <li class="list-group-item">ISBN<br> <input type="text" name="isbn"
+                                        size="60" value="${book.isbn}" required>
+                                    </li>
+                                    <li class="list-group-item">著者<br> <input type="text" name="authors"
+                                        size="60" value="${book.authors}"></li>
+                                    <li class="list-group-item">出版社<br> <input type="text" name="publisher"
+                                        size="60" value="${book.publisher}"></li>
+                                    <li class="list-group-item">出版日<br> <input type="date" name="publishDate"
+                                        size="60" value="${book.publishDate}"></li>
+                                    <li class="list-group-item">価格<br> <input type="text" name="price"
+                                        size="60" value="${book.price}"></li>
+                                    <li class="list-group-item">購入日<br> <input type="date" name="getDate"
+                                        size="60" value="${book.getDate}"></li>
+                                    <li class="list-group-item">進捗<br> <input type="text" name="progress"
+                                        size="60" value="${book.progress}"></li>
                                 </ul>
                             </div>
                             <p>メモ</p>
-                            <textarea rows="5" cols="80" id="BookMemo" name="memo"></textarea>
-                            <div class="card-body">
-                                <c:out value="${book.memo}" />
-                                <!-- <a href="#" class="card-link">更新</a> <a href="#"
-    class="card-link">削除</a> -->
-                            </div>
-                        </div>
-                        <input type="submit" name="update" value="更新"> <a class="btn btn-danger
-    card"
-                            href="#" role="button">削除</a> <a href="" class="btn btn--orange btn--cubic btn--shadow">PUSH！</a>
-                    </form>
 
+
+
+                            <div>
+                                <p class="h2">☆メモ☆</p>
+
+                                <div>
+                                    <textarea rows="5" cols="80" id="BookMemo" name="memo">
+                                     <c:out value="${book.memo}"/>
+                                     </textarea>
+
+                                </div>
+                            </div>
+                            <%-- value="${book.memo}" --%>
+                            <input type="hidden" name="menu" value="submit"> <input type="submit" name="submit"
+                                value="更新" class="btn btn-primary">
+                        </div>
+                    </form>
+                    <br>
+                    <div class="position-relative">
+                        <form action="/Bookshelf/BookList" method="POST">
+                            <input type="hidden" name="menu" value="delete"> <input type="hidden" name="isbn"
+                                value="${book.isbn}"> <input type="submit" name="submit" value="削除"
+                                class="btn btn-danger position-absolute bottom-100 start-100">
+                        </form>
+                        <br>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-     --%><jsp:include page="/WEB-INF/jsp/footer.jsp" /> <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-    crossorigin="anonymous"></script>
+
+
+
+
+
+
+    <hr>
+    <jsp:include page="/WEB-INF/jsp/footer.jsp" />
 </body>
 </html>

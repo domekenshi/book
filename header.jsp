@@ -22,7 +22,7 @@
 <!-- リンクは調整する -->
     <nav class="navbar navbar-expand-lg navbar-light bg-success fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand text-white" href="/Bookshelf/Main?menu=list">
+    <a class="navbar-brand text-white" href="/Bookshelf/Menu">
     <img src="https://img.icons8.com/color/48/000000/book-shelf.png" width="30" height="24">　本棚　　</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -30,11 +30,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="/Bookshelf/Main?menu=list">
+          <a class="nav-link active text-white" aria-current="page" href="/Bookshelf/Menu?menu=add">
           <img src="https://img.icons8.com/color/48/000000/save-as.png" width="30" height="24"/>追加・登録　　</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="/Bookshelf/Main?menu=list">
+          <a class="nav-link text-white" href="/Bookshelf/Menu?menu=want">
           <img src="https://img.icons8.com/color/48/000000/like--v3.png" width="30" height="24"/>ほしいものリスト　　</a>
         </li>
         <li class="nav-item dropdown">
@@ -43,23 +43,23 @@
             購入
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="https://www.amazon.co.jp/book/s?k=book">Amazon</a></li>
-            <li><a class="dropdown-item" href="https://honto.jp/">honto</a></li>
-            <li><a class="dropdown-item" href="https://books.rakuten.co.jp/">楽天books</a></li>
-            <li><a class="dropdown-item" href="https://shop.tsutaya.co.jp/book.html">蔦屋書店</a></li>
-            <li><a class="dropdown-item" href="https://www.kinokuniya.co.jp/">紀伊国屋</a></li>
+            <li><a class="dropdown-item" href="https://www.amazon.co.jp/book/s?k=book" target="_blank">Amazon</a></li>
+            <li><a class="dropdown-item" href="https://honto.jp/" target="_blank">honto</a></li>
+            <li><a class="dropdown-item" href="https://books.rakuten.co.jp/" target="_blank">楽天books</a></li>
+            <li><a class="dropdown-item" href="https://shop.tsutaya.co.jp/book.html" target="_blank">蔦屋書店</a></li>
+            <li><a class="dropdown-item" href="https://www.kinokuniya.co.jp/" target="_blank">紀伊国屋</a></li>
           </ul>
           <li>　　
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="/Bookshelf/Main?menu=list">
-          <img src="https://img.icons8.com/color/48/000000/gender-neutral-user.png" width="30" height="24"/>設定　　</a>
+          <a class="nav-link text-white" href="/Bookshelf/Menu?menu=info">
+          <img src="https://img.icons8.com/color/48/000000/gender-neutral-user.png" width="30" height="24"/>ユーザー設定　　</a>
         </li>
       </ul>
-      <form class="d-flex">
+      <!-- <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-info text-white" type="submit">search</button>
-      </form>
+      </form> -->
     </div>
   </div>
 </nav>

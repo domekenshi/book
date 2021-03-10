@@ -14,93 +14,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- <script src="/WEB-INF/js/addBook.js"></script> -->
-<title>検索と追加</title>
-</head>
-<script>
-$(function () {
-    // フォームID [isbn] に入力があった場合、jQueryの関数 [change] を使ってISBNコードを取得。
-    // Google Books APIへ問い合わせを行う。
-    // もしGoogle Books APIに書籍が存在しない(totalItemsが0の場合)、入力欄に表示されたデータをすべて消去し、該当書籍がないとメッセージを表示する
-    $("#isbn").change(() => {
-      const isbn = $("#isbn").val();
-      let url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
-      $.getJSON(url, function (data) {
-        if (!data.totalItems) {
-          $("#isbn").val("");
-          $("#BookTitle").text("");
-          $("#BookAuthor").text("");
-          $("#isbn10").text("");
-          // $("#isbn13").text("");
-          $("publisher").val("");
-          $("#PublishedDate").val("");
-          $("#BookThumbnail").text("");
-          $("#BookDescription").text("");
-          $("#BookMemo").val("");
-//エラーメッセージ
-          $("#message").html('<p class="bg-warning" id="warning">該当する書籍がありません。</p>');
-          $('#message > p').fadeOut(3000);
-        } else {
-          // 該当書籍が存在した場合、JSONをパースして入力項目のデータを取得する
-          //タイトル検索用に一文追加
-          $("#isbn").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
-          $("#BookTitle").val(data.items[0].volumeInfo.title);
-          // $("#isbn13").text(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
-          $("#isbn10").text(data.items[0].volumeInfo.industryIdentifiers[1].identifier);
-          $("#BookAuthor").val(data.items[0].volumeInfo.authors[0]);
-          $("#Publisher").val(data.items[0].volumeInfo.publisher);
-          $("#PublishedDate").val(data.items[0].volumeInfo.publishedDate);
-          $("#BookDescription").text(data.items[0].volumeInfo.description);
-          $("#BookThumbnail").html('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
-          $("#BookThumbnail2").val('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
-        }
-      });
-    });
-  // タイトルが変更された時の処理
-  $("#BookTitle").change(() => {
-      const intitle = $("#BookTitle").val();
-      let url = "https://www.googleapis.com/books/v1/volumes?q=intitle:" + intitle;
-      $.getJSON(url, function (data) {
-        if (!data.totalItems) {
-          $("#isbn").val("");
-          $("#BookTitle").text("");
-          $("#BookAuthor").text("");
-          $("#isbn10").text("");
-          // $("#isbn13").text("");
-          $("publisher").val("");
-          $("#PublishedDate").val("");
-          $("#BookThumbnail").text("");
-          $("#BookDescription").val("");
-          $("#BookMemo").val("");
-          $("#message").html('<p class="bg-warning" id="warning">該当する書籍がありません。</p>');
-          $('#message > p').fadeOut(3000);
-        } else {
-          // 該当書籍が存在した場合、JSONをパースして入力項目のデータを取得する
-          $("#isbn").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
-          $("#BookTitle").val(data.items[0].volumeInfo.title);
-          // $("#isbn13").text(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
-          $("#isbn10").text(data.items[0].volumeInfo.industryIdentifiers[1].identifier);
-          $("#BookAuthor").val(data.items[0].volumeInfo.authors[0]);
-          $("#Publisher").val(data.items[0].volumeInfo.publisher);
-          $("#PublishedDate").val(data.items[0].volumeInfo.publishedDate);
-          $("#BookDescription").val(data.items[0].volumeInfo.description);
-          $("#BookThumbnail").html('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
-          $("#BookThumbnail2").val('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
-        }
-      });
-    });
-  window.addEventListener('DOMContentLoaded', ()=>{
-      document.querySelectorAll('.input_field').forEach(x=>{
-        x.addEventListener('input',()=>{
-          var reg=/[^0-9]/g;
-          var val=x.value;
-          if(reg.test(val)){
-            x.value=val.replace(reg,'');
-          }
-        });
-      });
-    });
-  });
-</script>
+
 <style>
 body {
     background-repeat: repeat;
@@ -108,6 +22,7 @@ body {
     text-align: center;
     padding: 2em;
 }
+
 .button {
     display: inline-block;
     border-radius: 5%;
@@ -133,6 +48,7 @@ body {
     border: 2px solid #000066;
     /* 枠の指定 */
 }
+
 .button:hover {
     box-shadow: none;
     /* カーソル時の影消去 */
@@ -146,6 +62,7 @@ body {
     display: inline-flex;
     flex-direction: row-reverse;
 }
+
 .hidden--visually {
     border: 0;
     clip: rect(1px, 1px, 1px, 1px);
@@ -157,30 +74,270 @@ body {
     position: absolute;
     width: 1px;
 }
+
 .rating__label {
     cursor: pointer;
     color: gray;
     padding-left: 0.25rem;
     padding-right: 0.25rem;
 }
+
 .rating__icon::before {
     content: "★";
 }
+
 .rating__input:hover ~.rating__label {
     color: lightgray;
 }
+
 .rating__input:checked ~.rating__label {
     color: goldenrod;
 }
+
 #star {
     text-align: center;
     font-size: 1.5rem;
     padding: 1rem 0.5rem;
 }
-input{
-text-align:center;
+
+input {
+    text-align: center;
+}
+/* ラジオボタン */
+th {
+    text-align: left;
+}
+
+th, td {
+    padding: 10px;
+}
+
+tr:nth-child(odd) {
+    background-color: #ddd;
+}
+
+.affiliation_wrap:not(:last-child) {
+    padding-right: 30px;
+}
+
+input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 15px;
 }
 </style>
+<title>検索と追加</title>
+</head>
+<script>
+$(function () {
+    // フォームID [isbn] に入力があった場合、jQueryの関数 [change] を使ってISBNコードを取得。
+    // Google Books APIへ問い合わせを行う。
+    // もしGoogle Books APIに書籍が存在しない(totalItemsが0の場合)、入力欄に表示されたデータをすべて消去し、該当書籍がないとメッセージを表示する
+    $("#isbn").change(() => {
+      const isbn = $("#isbn").val();
+      let url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
+      $.getJSON(url, function (data) {
+        if (!data.totalItems) {
+          $("#isbn").val("");
+          $("#BookTitle").text("");
+          $("#BookAuthor").text("");
+          $("#isbn10").text("");
+          $("#isbn13").val("");
+          $("publisher").val("");
+          $("#PublishedDate").val("");
+          $("#BookThumbnail").text("");
+          $("#BookDescription").text("");
+          $("#BookMemo").val("");
+//エラーメッセージ
+          $("#message").html('<p class="bg-warning" id="warning">該当する書籍がありません。</p>');
+          $('#message > p').fadeOut(3000);
+        } else {
+          // 該当書籍が存在した場合、JSONをパースして入力項目のデータを取得する
+          //タイトル検索用に一文追加
+          $("#isbn").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
+          $("#BookTitle").val(data.items[0].volumeInfo.title);
+          $("#isbn13").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
+          $("#isbn10").text(data.items[0].volumeInfo.industryIdentifiers[1].identifier);
+          $("#BookAuthor").val(data.items[0].volumeInfo.authors[0]);
+          $("#Publisher").val(data.items[0].volumeInfo.publisher);
+          $("#PublishedDate").val(data.items[0].volumeInfo.publishedDate);
+          $("#BookDescription").text(data.items[0].volumeInfo.description);
+          $("#BookThumbnail").html('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
+          $("#BookThumbnail2").val('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
+        }
+      });
+    });
+  // タイトルが変更された時の処理
+  $("#BookTitle").change(() => {
+      const intitle = $("#BookTitle").val();
+      let url = "https://www.googleapis.com/books/v1/volumes?q=intitle:" + intitle;
+      $.getJSON(url, function (data) {
+        if (!data.totalItems) {
+          $("#isbn").val("");
+          $("#BookTitle").text("");
+          $("#BookAuthor").text("");
+          $("#isbn10").text("");
+          $("#isbn13").val("");
+          $("publisher").val("");
+          $("#PublishedDate").val("");
+          $("#BookThumbnail").text("");
+          $("#BookDescription").val("");
+          $("#BookMemo").val("");
+          $("#message").html('<p class="bg-warning" id="warning">該当する書籍がありません。</p>');
+          $('#message > p').fadeOut(3000);
+        } else {
+          // 該当書籍が存在した場合、JSONをパースして入力項目のデータを取得する
+          $("#isbn").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
+          $("#BookTitle").val(data.items[0].volumeInfo.title);
+          $("#isbn13").val(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
+          $("#isbn10").text(data.items[0].volumeInfo.industryIdentifiers[1].identifier);
+          $("#BookAuthor").val(data.items[0].volumeInfo.authors[0]);
+          $("#Publisher").val(data.items[0].volumeInfo.publisher);
+          $("#PublishedDate").val(data.items[0].volumeInfo.publishedDate);
+          $("#BookDescription").val(data.items[0].volumeInfo.description);
+          $("#BookThumbnail").html('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
+          $("#BookThumbnail2").val('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
+        }
+      });
+    });
+  window.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelectorAll('.input_field').forEach(x=>{
+        x.addEventListener('input',()=>{
+          var reg=/[^0-9]/g;
+          var val=x.value;
+          if(reg.test(val)){
+            x.value=val.replace(reg,'');
+          }
+        });
+      });
+    });
+
+//変数target13に、入力不可にしたい項目を定義("isbn13"の入力可否）
+  var target13 = document.getElementById("isbn13");
+
+  // 変数target13の要素を入力不可にする
+  target13.disabled = true;
+
+  // 変数triggerに、入力不可を解除するきっかけにしたい項目を定義
+  var trigger13 = document.getElementById("affiliation1");
+
+  // 入力不可を解除する条件を定義
+  trigger13.addEventListener("click", function(){
+      if(trigger13.checked){
+        // ここに条件をクリアした時の動作を入れる
+        target13.disabled = true;
+         }
+    }, true);
+
+  // 変数trigger14に、入力不可を解除するきっかけにしたい項目を定義
+  var trigger14 = document.getElementById("affiliation2");
+
+  // 入力不可を解除する条件を定義
+  trigger14.addEventListener("click", function(){
+      if(trigger14.checked){
+        // ここに条件をクリアした時の動作を入れる
+        target13.disabled = false;
+         }
+    }, false);
+
+
+
+//変数targetに、入力不可にしたい項目を定義("isbn"の入力可否）
+  var target = document.getElementById("isbn");
+
+  // 初期はISBN検索にチェックがついているので入力可
+  target.disabled = false;
+
+  // 変数triggerに、入力不可を解除するきっかけにしたい項目を定義
+  var trigger = document.getElementById("affiliation1");
+
+  // 入力不可を解除する条件を定義
+  trigger.addEventListener("click", function(){
+      if(trigger.checked){
+        // ここに条件をクリアした時の動作を入れる
+        target.disabled = false;
+         }
+    }, false);
+
+  // 変数trigger2に、入力不可を解除するきっかけにしたい項目を定義
+  var trigger2 = document.getElementById("affiliation2");
+
+  // 入力不可を解除する条件を定義
+  trigger2.addEventListener("click", function(){
+      if(trigger2.checked){
+        // ここに条件をクリアした時の動作を入れる
+        target.disabled = true;
+         }
+    }, true);
+  });
+////////////////////////////////////////////////////////
+/* タイトル検索の分岐 */
+  var bt = document.getElementById("BT");
+
+  bt.disabled = true;
+
+  // 変数triggerに、入力不可を解除するきっかけにしたい項目を定義
+  var tri = document.getElementById("aff1");
+
+  // 入力不可を解除する条件を定義
+  tri.addEventListener("click", function(){
+      if(tri.checked){
+        // ここに条件をクリアした時の動作を入れる
+        bt.disabled = true;
+         }
+    }, true);
+
+  // 変数trigger14に、入力不可を解除するきっかけにしたい項目を定義
+  var tri2 = document.getElementById("aff2");
+
+  // 入力不可を解除する条件を定義
+  tri2.addEventListener("click", function(){
+      if(tri2.checked){
+        // ここに条件をクリアした時の動作を入れる
+        bt.disabled = false;
+         }
+    }, false);
+
+
+
+//変数targetに、入力不可にしたい項目を定義("isbn"の入力可否）
+  var target = document.getElementById("isbn");
+
+  // 初期はISBN検索にチェックがついているので入力可
+  target.disabled = false;
+
+  // 変数triggerに、入力不可を解除するきっかけにしたい項目を定義
+  var trigger = document.getElementById("affiliation1");
+
+  // 入力不可を解除する条件を定義
+  trigger.addEventListener("click", function(){
+      if(trigger.checked){
+        // ここに条件をクリアした時の動作を入れる
+        target.disabled = false;
+         }
+    }, false);
+
+  // 変数trigger2に、入力不可を解除するきっかけにしたい項目を定義
+  var trigger2 = document.getElementById("affiliation2");
+
+  // 入力不可を解除する条件を定義
+  trigger2.addEventListener("click", function(){
+      if(trigger2.checked){
+        // ここに条件をクリアした時の動作を入れる
+        target.disabled = true;
+         }
+    }, true);
+  });
+
+
+
+
+//文字数カウント
+  function ShowLength( str ) {
+       document.getElementById("inputlength").innerHTML = str.length + "文字";
+    }
+</script>
+
 
 <body>
     <jsp:include page="/WEB-INF/jsp/header.jsp" />
@@ -191,39 +348,73 @@ text-align:center;
     <br>
     <div class="container" style="background-color: rgb(251, 250, 248); padding: 20px;" id="container">
         <form action="/Bookshelf/AddBook" method="POST">
+<table>
+                <tr>
+                    <th>ISBN検索</th>
+                    <td>
+                        <div>
+                            <span class="affiliation_wrap"><input id="affiliation1" type="radio" name="radio"
+                                value="ISBN検索" checked>利用する</span> <span class="affiliation_wrap"><input
+                                id="affiliation2" type="radio" name="radio" value="手入力">手入力</span>
+                        </div>
+                    </td>
+                </tr>
 
+                <tr>
+                    <th>タイトル検索</th>
+                    <td>
+                        <div>
+                            <span class="affiliation_wrap"><input id="aff1" type="radio" name="radio2"
+                                value="タイトル検索" checked>利用する</span> <span class="affiliation_wrap"><input
+                                id="aff2" type="radio" name="radio2" value="手入力">手入力</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
             <div id="content">
                 <div>
-                    <label style="padding:5px;" for="isbn">ISBNを入力してください</label><span style="padding-left:5px"class="badge bg-danger">必須</span><br>
-                    <input type="text" id="isbn" name="isbn" maxlength="13" size="40" placeholder="　１０桁 または１３桁の数字"
-                        required>
+                    <label style="padding: 5px;" for="isbn">「ISBN検索窓」</label><br><span style="padding-left: 5px"
+                        class="badge bg-danger">ISBN検索用</span><br> <input type="text" id="isbn" name="isbn"
+                        maxlength="40" size="40" placeholder="手入力の場合下の検索窓に入力してください">
                 </div>
                 <br>
                 <div id="message"></div>
+
+                <div>
+                    <p class="h2">[ISBN13桁以上]</p>
+                    <span class="badge bg-danger">手入力用</span> <input type="text" id="isbn13" name="isbn2" maxlength="40"
+                        size="40" placeholder="　手入力の場合こちらに入力してください" pattern="([1-9][0-9]*)" required>
+                    <!-- <p id="isbn13"></p> -->
+                </div>
+                <br>
                 <div>
                     <p class="h2">
                         [書籍タイトル]<br>
-                    </p>
-                    <input type="text" id="BookTitle" name="title" size="80" required
-                        placeholder="　タイトルが完全に一致しない場合別な本の情報が自動入力される可能性があります"> <span class="badge bg-danger">必須</span>
+                    </p> <span class="badge bg-danger">自動入力用</span>
+                    <input type="text" id="BookTitle" name="title" size="80"
+                        placeholder="　タイトルが完全に一致しない場合別な本の情報が自動入力される可能性があります">
                 </div>
+                <br>
+                <span class="badge bg-danger">手動入力用</span>
+                    <input type="text" id="BT" name="title2" size="80" required>
                 <br>
                 <div>
                     <p class="h2">[著者]</p>
                     <!-- <p id="BookAuthor"></p> -->
-                    <input type="text" id="BookAuthor" name="authors" size="40">
+                    <input type="text" id="BookAuthor" name="authors" maxlength="100" size="40">
                 </div>
                 <br>
                 <div>
                     <p class="h2">[出版社]</p>
                     <!-- <p id="Publisher"></p> -->
-                    <input type="text" id="Publisher" name="publisher" size="40">
+                    <input type="text" id="Publisher" name="publisher" maxlength="100" size="40">
                 </div>
                 <br>
                 <div>
                     <p class="h2">[価格]</p>
                     <!-- <p id="Publisher"></p> -->
-                    <input type="number" id="Price" pattern="([1-9][0-9]*)" class="input_field" name="price"  size="40" >
+                    <input type="number" id="Price" min="0" pattern="(0|[1-9][0-9]*)" class="input_field" name="price"
+                        size="40">
                 </div>
                 <br>
                 <div>
@@ -235,9 +426,8 @@ text-align:center;
                     <p class="h2">[評価]</p>
                     <div class="rating" id="star">
                         <input class="rating__input hidden--visually" type="radio" id="5-star" name="evaluation"
-                            value="5" /> <label class="rating__label" for="5-star"
-                            title="5 out of 5 rating"> <span class="rating__icon"></span> <span
-                            class="hidden--visually">5 out of 5 rating</span>
+                            value="5" /> <label class="rating__label" for="5-star" title="5 out of 5 rating"> <span
+                            class="rating__icon"></span> <span class="hidden--visually">5 out of 5 rating</span>
                         </label> <input class="rating__input hidden--visually" type="radio" id="4-star" name="evaluation"
                             value="4" /> <label class="rating__label" for="4-star" title="4 out of 5 rating"> <span
                             class="rating__icon"></span> <span class="hidden--visually">4 out of 5 rating</span>
@@ -258,11 +448,7 @@ text-align:center;
                     <p id="isbn10"></p>
                 </div>
                 <br>
-                <!-- <div>
-          <p class="h2">[ISBN13]</p>
-          <p id="isbn13"></p>
-        </div>
-        <br> -->
+
 
                 <div>
                     <p class="h2">[出版日]</p>
@@ -290,7 +476,9 @@ text-align:center;
                 <br>
                 <div>
                     <p class="h2">☆メモ☆</p>
-                    <textarea rows="5" cols="80" id="BookMemo" name="memo"></textarea>
+                    <textarea rows="5" cols="80" id="BookMemo" name="memo" maxlength="100" placeholder="100文字以内"
+                    onkeyup="ShowLength(value);"></textarea>
+                    <p id="inputlength">0文字</p>
                 </div>
                 <br>
                 <div style="padding-bottom: 30px">

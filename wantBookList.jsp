@@ -9,8 +9,7 @@
 <link rel="stylesheet" href="./css/style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- スタイルシート -->
-    <style>
+<style>
 body {
     /* background-repeat: repeat;
     background-image: url("./img/book-wall-1151405_1920.jpg");
@@ -112,53 +111,8 @@ text-align:center;
   color         : rgba(26, 26, 255, 0.81);     /* 背景色     */
   background    : #66ff66;     /* 文字色     */
 }
-/* 検索サブ用 */
-/* *::-webkit-input-placeholder {
-    color: #fff;
-}
-*:-moz-placeholder {
-    color: #fff;
-}
-*::-moz-placeholder {
-    color: #fff;
-}
-*:-ms-input-placeholder {
-    color: #fff;
-}
-#containter {
-  text-align: center;
-}
-h1 {
-  color: #55acee;
-  font-family: cursive;
-  font-weight: bold;
-  font-size: 72px;
-  margin-top: 50px;
-}
-.textbox {
-  margin-top: 50px;
-  font-family: cursive;
-  border: 1px solid #acacac;
-  color: #fff;
-  opacity: .7;
-  border-radius: 10px;
-  padding: 20px;
-  text-align: center;
-  width: 400px;
-  transition: all .3s;
-  -webkit-transition: all .3s;
-  -moz-transition: all .3s;
-  font-size: 16px;
-  outline: none;
-  background-color: #acacac;
-}
-.textbox:focus {
-  width: 500px;
-  outline: none;
-} */
 </style>
-
-<title>My Bookshelf</title>
+<title>ほしいものリスト</title>
 </head>
 <body>
     <!--JS  -->
@@ -179,29 +133,20 @@ h1 {
                         };
                         // searchWordの実行
                         $('#search-text').on('input', searchWord);
-                        /* 検索サブ */
-                        function send() {
-                            document.form.submit()
-                            }
                     });
                 </script>
+
+
 
 
 
 <!-- ヘッダー -->
     <jsp:include page="/WEB-INF/jsp/header.jsp" />
     <br>
-    <h1>MyBookshelf</h1>
+    <h1>ほしいものリスト</h1>
     <br>
     <br>
     <br>
-    <!-- 検索サブ用
-    <div id="containter">
-  <h1>Google</h1>
-  <form method="get" action="https://www.google.com/search" target="_blank">
-    <input class="textbox" type="text" name="q" placeholder="Search" onEnter="send()" autocomplete="off" maxlength="60">
-  </form>
-</div> -->
     <!-- 検索窓 -->
     <div class="wrapper">
         <div class="search-area">
@@ -213,8 +158,8 @@ h1 {
                 <div id="search-result__list"></div>
             </div>
         </div>
-        <div class="container-xxl center-block">
-            <table class="table table-bordered border-success padding-left:20px;">
+        <div class="container-xxl">
+            <table class="table table-bordered border-success padding-left:20px; text-align:center;">
 
                 <thead class="p-3 mb-2 bg-primary border-dark text-white">
                     <!-- テーブルの要素 -->
@@ -244,16 +189,36 @@ h1 {
                             <td><c:out value="${book.publisher}" /></td>
                             <td><c:out value="${book.price}" /></td>
                             <!-- ☆レビュー -->
-                            <td><td><c:forEach var="i" begin="1" end="${book.evaluation}" step="1">
-                           ★
-                             </c:forEach></td>
+                            <td><div class="rating" id="star">
+                                        <input class="rating__input hidden--visually" type="radio" id="5-star"
+                                            name="evaluation" value="5" /> <label class="rating__label" for="5-star"
+                                            title="5 out of 5 rating"> <span class="rating__icon"></span> <span
+                                            class="hidden--visually">5 out of 5 rating</span>
+                                        </label> <input class="rating__input hidden--visually" type="radio" id="4-star"
+                                            name="evaluation" value="4" /> <label class="rating__label" for="4-star"
+                                            title="4 out of 5 rating"> <span class="rating__icon"></span> <span
+                                            class="hidden--visually">4 out of 5 rating</span>
+                                        </label> <input class="rating__input hidden--visually" type="radio" id="3-star"
+                                            name="evaluation" value="3" /> <label class="rating__label" for="3-star"
+                                            title="3 out of 5 rating"> <span class="rating__icon"></span> <span
+                                            class="hidden--visually">3 out of 5 rating</span>
+                                        </label> <input class="rating__input hidden--visually" type="radio" id="2-star"
+                                            name="evaluation" value="2" /> <label class="rating__label" for="2-star"
+                                            title="2 out of 5 rating"> <span class="rating__icon"></span> <span
+                                            class="hidden--visually">2 out of 5 rating</span>
+                                        </label> <input class="rating__input hidden--visually" type="radio" id="1-star"
+                                            name="evaluation" value="1" /> <label class="rating__label" for="1-star"
+                                            title="1 out of 5 rating"> <span class="rating__icon"></span> <span
+                                            class="hidden--visually">1 out of 5 rating</span>
+                                        </label>
+                                    </div></td>
                             <td><c:out value="${book.progress}" /></td>
                             <td><c:out value="${book.publishDate}" /></td>
                             <td><c:out value="${book.getDate}" /></td>
                             <td><c:out value="${book.memo}" /></td>
                             <td>
                                 <!-- action後で入力 -->
-                                <form action="/Bookshelf/BookList" method="post">
+                                <form action="/Bookshelf/WantBook" method="post">
                                     <input type="hidden" name="menu" value="bookinfo"> <input type="hidden"
                                         name="isbn" value="${book.isbn}"> <input type="submit" value="編集" class="button">
                                 </form>
