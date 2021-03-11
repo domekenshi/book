@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+body{
+background-image: url("https://physical-i.jp/wp-content/uploads/2019/08/SC190818_203303-00.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  margin: 0;
+  padding: 0;
+}
+
+h1{
+    color:#ffff;
+    text-shadow:0 5px 5px black;
+}
+
+.contaner{
+    color:#ffff;
+    text-shadow:0 5px 5px black;
+}
